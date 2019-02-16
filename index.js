@@ -71,7 +71,7 @@ io.on('connection', socket => {
     socketLogger(socket, `Logged in as ${email}`);
 
     // Emit last heart rate immediately.
-    socket.emit('heartRate', latestRates[email]);
+    socket.emit('heartRate', latestRates[email] || 0);
   });
 });
 
