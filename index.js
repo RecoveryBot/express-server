@@ -47,6 +47,18 @@ app.post('/bpm', (req, res) => {
 /*
   Socket.io Methods
 */
+const connections = {}; // Key: User email, Value: Socket ID.
+
 io.on('connection', socket => {
-  console.log('Joined by', socket.id);
+  socketLogger(socket, 'Connected.');
+
+  // Login user.
+  socket.on('login', email => {
+    connections[email] = socket.id;
+    socketLogger(`Logged in as ${email}`);
+  });
 });
+
+socketLogger = (socket, message) => {
+  console.log(`[${socket.id}] ${message}`);
+};
