@@ -40,7 +40,20 @@ app.get('/bpm', (req, res) => {
 
 app.post('/bpm', (req, res) => {
   const { heartRate, userId } = req.query;
+
+  if (!heartRate || !userId) {
+    res.sendStatus(400);
+  }
+
+  // Store heart rate.
   latestRates[userId] = heartRate;
+
+  // Emit rate.
+  const socket = io.sockets.connected[connections[userId]];
+  if (socket) {
+    socket.emit('heartRate', heartRate);
+  }
+
   res.sendStatus(200);
 });
 
@@ -56,6 +69,9 @@ io.on('connection', socket => {
   socket.on('login', email => {
     connections[email] = socket.id;
     socketLogger(socket, `Logged in as ${email}`);
+
+    // Emit last heart rate immediately.
+    socket.emit('heartRate', latestRates[email]);
   });
 });
 
