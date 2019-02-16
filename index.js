@@ -50,6 +50,9 @@ app.post('/bpm', (req, res) => {
 
   // Emit rate.
   const socket = io.sockets.connected[connections[userId]];
+  console.log('UserId:', userId);
+  console.log('SocketId:', connections[userId]);
+  console.log(socket);
   if (socket) {
     socket.emit('heartRate', heartRate);
   }
