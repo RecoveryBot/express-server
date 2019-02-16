@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/treehacks-2019/express-server/issues"
   },
-  "homepage": "https://github.com/treehacks-2019/express-server#readme"
+  "homepage": "https://github.com/treehacks-2019/express-server#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
