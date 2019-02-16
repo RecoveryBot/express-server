@@ -7,17 +7,21 @@ const PORT = process.env.port || 3000;
   Modules
 */
 const express = require('express');
+const http = require('http');
+const socketio = require('socket.io');
 
 /*
-  Express Setup
+  Server Setup
 */
 const app = express();
-app.listen(PORT, () => {
+const server = http.Server(app);
+const io = socketio(server);
+server.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
 
 /*
-  Methods
+  Express Methods
 */
 const latestRates = {};
 
@@ -38,4 +42,11 @@ app.post('/bpm', (req, res) => {
   const { heartRate, userId } = req.query;
   latestRates[userId] = heartRate;
   res.sendStatus(200);
+});
+
+/*
+  Socket.io Methods
+*/
+io.on('connection', socket => {
+  console.log('Joined by', socket.id);
 });
