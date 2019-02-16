@@ -18,5 +18,8 @@
   "homepage": "https://github.com/treehacks-2019/express-server#readme",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "engines": {
+    "node": "8.11.1"
   }
 }
