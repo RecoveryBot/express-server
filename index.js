@@ -16,16 +16,26 @@ app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
 
+/*
+  Methods
+*/
 const latestRates = {};
-let log = '';
 
 app.get('/', (req, res) => {
-  res.send(log);
+  res.send(latestRates);
+});
+
+app.get('/bpm', (req, res) => {
+  const { userId } = req.query;
+  if (latestRates[userId]) {
+    res.send(latestRates[userId]);
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 app.post('/bpm', (req, res) => {
   const { heartRate, userId } = req.query;
   latestRates[userId] = heartRate;
-  log += `Heart rate: ${heartRate}\n`;
   res.sendStatus(200);
 });
