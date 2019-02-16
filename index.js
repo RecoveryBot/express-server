@@ -55,7 +55,7 @@ io.on('connection', socket => {
   // Login user.
   socket.on('login', email => {
     connections[email] = socket.id;
-    socketLogger(`Logged in as ${email}`);
+    socketLogger(socket, `Logged in as ${email}`);
   });
 });
 
