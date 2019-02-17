@@ -26,6 +26,7 @@ server.listen(PORT, () => {
 */
 const latestRates = {};
 const userNames = {};
+const contacts = {};
 
 app.get('/', (req, res) => {
   res.send(latestRates);
@@ -40,6 +41,26 @@ app.post('/register', (req, res) => {
 app.get('/user', (req, res) => {
   const { userId } = req.query;
   res.send(userNames[userId] || userId);
+});
+
+app.get('/contacts', (req, res) => {
+  const { userId } = req.query;
+  res.send(contacts[userId] || {});
+});
+
+app.post('/contacts', (req, res) => {
+  const { userId, contactName, contactPhone } = req.query;
+
+  if (!contacts[userId]) {
+    contacts[userId] = [];
+  }
+
+  contacts[userId].push({
+    name: contactName,
+    phone: contactPhone
+  });
+
+  res.sendStatus(200);
 });
 
 app.get('/bpm', (req, res) => {
