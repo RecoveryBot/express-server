@@ -81,7 +81,7 @@ app.post('/alert', (req, res) => {
     mode: 'cors',
     credentials: 'omit'
   })
-  .then(res => {
+  .then(() => {
     console.log('Sent to Twilio.');
     res.sendStatus(200);
   })
