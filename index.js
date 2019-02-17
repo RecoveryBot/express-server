@@ -9,6 +9,7 @@ const PORT = process.env.port || 3000;
 const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
+const fetch = require('node-fetch');
 
 /*
   Server Setup
