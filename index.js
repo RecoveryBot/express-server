@@ -82,7 +82,7 @@ app.post('/alert', (req, res) => {
   const msg = `Hey! ${name} is experiencing withdrawal symptoms and could really use your support! Please call ${name} ASAP!`
 
   fetch(`https://unitingdust.api.stdlib.com/examples-twilio@dev/?tel=${number}&body=${encodeURIComponent(msg)}`, {
-    method: 'POST',
+    method: 'GET',
     mode: 'cors',
     credentials: 'omit'
   })
