@@ -24,9 +24,16 @@ server.listen(PORT, () => {
   Express Methods
 */
 const latestRates = {};
+const userNames = {};
 
 app.get('/', (req, res) => {
   res.send(latestRates);
+});
+
+app.post('/register', (req, res) => {
+  const { userId, userName } = req.query;
+  userNames[userId] = userName;
+  res.sendStatus(200);
 });
 
 app.get('/bpm', (req, res) => {
@@ -55,6 +62,32 @@ app.post('/bpm', (req, res) => {
   }
 
   res.sendStatus(200);
+});
+
+app.post('/alert', (req, res) => {
+  const { userId } = req.query;
+
+  if (!userId) {
+    res.sendStatus(400);
+  }
+
+  const name = userNames[userId] || userId;
+  const number = '6502195319';
+  const msg = `Hey! ${name} is experiencing withdrawal symptoms and could really use your support! Please call ${name} ASAP!`
+
+  fetch(`https://unitingdust.api.stdlib.com/examples-twilio@dev/?tel=${number}&body=${encodeURIComponent(msg)}`, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'omit'
+  })
+  .then(res => {
+    console.log('Sent to Twilio.');
+    res.sendStatus(200);
+  })
+  .catch(err => {
+    console.error(err);
+    res.sendStatus(400);
+  });
 });
 
 /*
