@@ -37,6 +37,11 @@ app.post('/register', (req, res) => {
   res.sendStatus(200);
 });
 
+app.get('/user', (req, res) => {
+  const { userId } = req.query;
+  res.send(userNames[userId] || userId);
+});
+
 app.get('/bpm', (req, res) => {
   const { userId } = req.query;
   if (latestRates[userId]) {
